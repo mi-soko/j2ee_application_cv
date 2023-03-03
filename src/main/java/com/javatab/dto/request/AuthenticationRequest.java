@@ -6,7 +6,6 @@ import lombok.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
-
 @Getter
 @Setter
 public class AuthenticationRequest extends ModelBase {
@@ -20,4 +19,5 @@ public class AuthenticationRequest extends ModelBase {
 	private String device;
 	@Email(message = "Email id should be valid")
 	private String email;
+
 }

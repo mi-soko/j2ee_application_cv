@@ -2,6 +2,7 @@ package com.javatab.service.impl;
 
 import com.javatab.domain.entity.User;
 import com.javatab.dto.request.AuthenticationRequest;
+import com.javatab.dto.request.RegistrationRequest;
 import com.javatab.dto.response.AuthenticationResponse;
 import com.javatab.model.security.SecurityUser;
 import com.javatab.repository.UserRepository;
@@ -18,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
@@ -37,14 +37,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Authentication authentication = this.authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authenticationRequest.getUsername(),
-                        authenticationRequest.getPassword()
-                )
-        );
+                        authenticationRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Reload password post-authentication so we can generate token
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-        return new AuthenticationResponse(Objects.requireNonNull(this.tokenUtils.generateToken(userDetails, authenticationRequest.getDevice())));
+        return new AuthenticationResponse(
+                Objects.requireNonNull(this.tokenUtils.generateToken(userDetails, authenticationRequest.getDevice())));
     }
 
     @Override
@@ -52,20 +51,26 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String username = this.tokenUtils.getUsernameFromToken(token);
         SecurityUser user = (SecurityUser) this.userDetailsService.loadUserByUsername(username);
         if (this.tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordReset())) {
-           return new AuthenticationResponse(this.tokenUtils.refreshToken(token));
+            return new AuthenticationResponse(this.tokenUtils.refreshToken(token));
         }
         return new AuthenticationResponse();
     }
 
     @Override
-    public User registerUser(AuthenticationRequest authenticationRequest) {
+    public User registerUser(RegistrationRequest registrationRequest) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(authenticationRequest.getPassword());
+        String hashedPassword = passwordEncoder.encode(registrationRequest.getPassword());
         User newUser = User.builder()
-                .username(authenticationRequest.getUsername())
+                .username(registrationRequest.getEmail())
                 .password(hashedPassword)
-                .email(authenticationRequest.getEmail())
+                .email(registrationRequest.getEmail())
                 .lastPasswordReset(new Date())
+                .levelStudy(registrationRequest.getLevelStudy())
+                .age(registrationRequest.getAge())
+                .address(registrationRequest.getAddress())
+                .speciality(registrationRequest.getSpeciality())
+                .tel(registrationRequest.getTel())
+                .professionalExperience(registrationRequest.getProfessionalExperience())
                 .authorities("ADMIN")
                 .build();
         return userRepository.save(newUser);

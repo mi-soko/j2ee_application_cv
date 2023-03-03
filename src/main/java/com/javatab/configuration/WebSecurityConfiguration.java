@@ -27,7 +27,6 @@ public class WebSecurityConfiguration {
     private final TokenUtils tokenUtils;
     private final AuthenticationConfiguration authConfig;
 
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -48,7 +47,8 @@ public class WebSecurityConfiguration {
 
     @Bean
     public AuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-        AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter(tokenUtils, userDetailsService);
+        AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter(tokenUtils,
+                userDetailsService);
         authenticationTokenFilter.setAuthenticationManager(authenticationManager());
         return authenticationTokenFilter;
     }
@@ -70,12 +70,14 @@ public class WebSecurityConfiguration {
                         "/h2-console/**",
                         "/api-docs/**",
                         "/swagger-ui.html",
-                        "/swagger-ui/**").permitAll()
+                        "/swagger-ui/**")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .cors();
 
-        // To fix h2-console - https://stackoverflow.com/questions/53395200/h2-console-is-not-showing-in-browser
+        // To fix h2-console -
+        // https://stackoverflow.com/questions/53395200/h2-console-is-not-showing-in-browser
         http.headers().frameOptions().disable();
 
         // Custom JWT based authentication

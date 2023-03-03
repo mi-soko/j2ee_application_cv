@@ -3,10 +3,10 @@ package com.javatab.controller.v1;
 import com.javatab.controller.BaseController;
 import com.javatab.controller.IUserController;
 import com.javatab.domain.entity.User;
+import com.javatab.dto.request.UpdateUserRequest;
 import com.javatab.exception.NoUserFoundException;
 import com.javatab.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +26,12 @@ public class UserControllerV1 extends BaseController implements IUserController 
     @GetMapping("/{username}")
     public ResponseEntity<User> getUserByName(@PathVariable("username") String username) {
         User aUser = userService.getUserByUsername(username).orElseThrow(() -> new NoUserFoundException(username));
+        return ResponseEntity.ok(aUser);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id") String id, UpdateUserRequest updateUserRequest ) {
+        User aUser = userService.updateUser(updateUserRequest);
         return ResponseEntity.ok(aUser);
     }
 }

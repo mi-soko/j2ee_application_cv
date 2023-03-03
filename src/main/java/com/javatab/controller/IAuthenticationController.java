@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.javatab.dto.request.RegistrationRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -21,5 +22,5 @@ public interface IAuthenticationController {
     ResponseEntity<?> authenticationRequest(HttpServletRequest request);
     @SecurityRequirements
     @PostMapping("/register")
-    ResponseEntity<?> registerUser(@RequestBody @Valid AuthenticationRequest authenticationRequest);
+    ResponseEntity<?> registerUser(@RequestBody @Valid RegistrationRequest registrationRequest);
 }

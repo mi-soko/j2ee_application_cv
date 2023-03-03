@@ -12,22 +12,21 @@ import org.springframework.util.StringUtils;
 @Configuration
 public class OpenApi30Config {
 
-    @Bean
-    public OpenAPI customOpenAPI() {
-        final String securitySchemeName = "X-Auth-Token";
-        final String apiTitle = String.format("%s API", StringUtils.capitalize("Spring boot JWT auth"));
-        return new OpenAPI()
-                .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
-                .components(
-                        new Components()
-                                .addSecuritySchemes(securitySchemeName,
-                                        new SecurityScheme()
-                                                .name(securitySchemeName)
-                                                .type(SecurityScheme.Type.APIKEY)
-                                                .in(SecurityScheme.In.HEADER)
+        @Bean
+        public OpenAPI customOpenAPI() {
+                final String securitySchemeName = "X-Auth-Token";
+                final String apiTitle = String.format("%s API", StringUtils.capitalize("Spring boot JWT auth"));
+                return new OpenAPI()
+                                .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
+                                .components(
+                                                new Components()
+                                                                .addSecuritySchemes(securitySchemeName,
+                                                                                new SecurityScheme()
+                                                                                                .name(securitySchemeName)
+                                                                                                .type(SecurityScheme.Type.APIKEY)
+                                                                                                .in(SecurityScheme.In.HEADER)
 
-                                )
-                )
-                .info(new Info().title(apiTitle).version("V1"));
-    }
+                                                                ))
+                                .info(new Info().title(apiTitle).version("V1"));
+        }
 }

@@ -1,10 +1,11 @@
 package com.javatab.service.impl;
 
 import com.javatab.domain.entity.User;
+import com.javatab.dto.request.UpdateUserRequest;
+import com.javatab.exception.NoUserFoundException;
 import com.javatab.repository.UserRepository;
 import com.javatab.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,27 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User updateUser(UpdateUserRequest updateUserRequest) {
+        User aUser = userRepository.findById(updateUserRequest.getId())
+                .orElseThrow(() -> new NoUserFoundException(updateUserRequest.getId().toString()));
+        User updatedUser = User.builder()
+                .email(aUser.getEmail())
+                .username(aUser.getUsername())
+                .password(aUser.getPassword())
+                .authorities(aUser.getAuthorities())
+                .lastPasswordReset(aUser.getLastPasswordReset())
+                .levelStudy(updateUserRequest.getLevelStudy())
+                .age(updateUserRequest.getAge())
+                .address(updateUserRequest.getAddress())
+                .speciality(updateUserRequest.getSpeciality())
+                .tel(updateUserRequest.getTel())
+                .professionalExperience(updateUserRequest.getProfessionalExperience())
+                .build();
+
+        return userRepository.save(updatedUser);
     }
 
     @Override

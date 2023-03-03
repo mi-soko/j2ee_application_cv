@@ -28,4 +28,17 @@ public class User extends BaseEntity {
   @Column(name = "authorities")
   private String authorities;
 
+  @Column(name = "age")
+  private String age;
+  @Column(name = "address")
+  private String address;
+  @Column(name = "tel")
+  private String tel;
+  @Column(name = "speciality")
+  private String speciality;
+  @Column(name = "level_study")
+  private String levelStudy;
+  @Column(name = "professional_experience")
+  private String professionalExperience;
+
 }
