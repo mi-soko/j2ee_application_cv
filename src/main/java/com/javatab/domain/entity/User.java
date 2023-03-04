@@ -28,6 +28,11 @@ public class User extends BaseEntity {
   @Column(name = "authorities")
   private String authorities;
 
+
+  @Column(name = "first_name")
+  private String firstName;
+  @Column(name = "last_name")
+  private String lastName;
   @Column(name = "age")
   private String age;
   @Column(name = "address")

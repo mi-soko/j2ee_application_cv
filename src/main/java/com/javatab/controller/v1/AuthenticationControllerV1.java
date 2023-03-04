@@ -25,16 +25,17 @@ public class AuthenticationControllerV1 extends BaseController implements IAuthe
 
   private final AuthenticationService authenticationService;
 
-  public ResponseEntity<AuthenticationResponse> authenticationRequest(AuthenticationRequest authenticationRequest) {
+  public ResponseEntity<AuthenticationResponse> login(AuthenticationRequest authenticationRequest) {
+
     return ResponseEntity.ok(this.authenticationService.authenticate(authenticationRequest));
   }
 
-  public ResponseEntity<AuthenticationResponse> authenticationRequest(HttpServletRequest request) {
+  public ResponseEntity<AuthenticationResponse> refreshToken(HttpServletRequest request) {
     return ResponseEntity.ok(this.authenticationService.refreshToken(request.getHeader(tokenHeader)));
   }
 
   public ResponseEntity<User> registerUser(RegistrationRequest registrationRequest) {
-    return new ResponseEntity<>(this.authenticationService.registerUser(registrationRequest), HttpStatus.CREATED);
+    return new ResponseEntity<User>(this.authenticationService.registerUser(registrationRequest), HttpStatus.CREATED);
   }
 
 }

@@ -17,6 +17,14 @@ public class RegistrationRequest extends ModelBase {
 	private String password;
 	@Email(message = "Email id should be valid")
 	private String email;
+
+
+	@NotNull()
+	private String firstName;
+
+	@NotNull()
+	private String lastName;
+
 	@NotNull
 	private String age;
 	private String address;

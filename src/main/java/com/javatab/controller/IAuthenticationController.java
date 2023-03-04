@@ -17,9 +17,9 @@ public interface IAuthenticationController {
 
     @SecurityRequirements
     @PostMapping()
-    ResponseEntity<?> authenticationRequest(@RequestBody @Valid AuthenticationRequest authenticationRequest);
+    ResponseEntity<?> login(@RequestBody @Valid AuthenticationRequest authenticationRequest);
     @GetMapping("/refresh")
-    ResponseEntity<?> authenticationRequest(HttpServletRequest request);
+    ResponseEntity<?> refreshToken(HttpServletRequest request);
     @SecurityRequirements
     @PostMapping("/register")
     ResponseEntity<?> registerUser(@RequestBody @Valid RegistrationRequest registrationRequest);

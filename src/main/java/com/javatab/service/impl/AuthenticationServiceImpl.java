@@ -8,6 +8,7 @@ import com.javatab.model.security.SecurityUser;
 import com.javatab.repository.UserRepository;
 import com.javatab.security.TokenUtils;
 import com.javatab.service.AuthenticationService;
+import javassist.tools.web.BadHttpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,8 +20,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Validation;
+import javax.validation.ValidationException;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,15 +40,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         // Perform the authentication
         Authentication authentication = this.authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        authenticationRequest.getUsername(),
+                        authenticationRequest.getEmail(),
                         authenticationRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Reload password post-authentication so we can generate token
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
         return new AuthenticationResponse(
                 Objects.requireNonNull(this.tokenUtils.generateToken(userDetails, authenticationRequest.getDevice())));
-    }
+        }
 
     @Override
     public AuthenticationResponse refreshToken(String token) {
@@ -60,6 +64,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public User registerUser(RegistrationRequest registrationRequest) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(registrationRequest.getPassword());
+        User user = this.userRepository.findByEmail(registrationRequest.getEmail());
+        if (user != null){
+            throw new ValidationException("Email existe deja");
+        }
         User newUser = User.builder()
                 .username(registrationRequest.getEmail())
                 .password(hashedPassword)

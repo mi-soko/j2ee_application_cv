@@ -21,8 +21,11 @@ public interface IUserController {
     @GetMapping()
     ResponseEntity<List<User>> getAllUsers();
 
-    @GetMapping("/{username}")
-    ResponseEntity<User> getUserByName(@PathVariable("username") String username);
+//    @GetMapping("/{username}")
+//    ResponseEntity<User> getUserByName(@PathVariable("username") String username);
+
+    @GetMapping("/{id}")
+    ResponseEntity<User> getUserById(@PathVariable("id") Long username);
 
     @PutMapping("/{id}")
     ResponseEntity<User> updateUser(@PathVariable("id") String id, @RequestBody @Valid UpdateUserRequest updateUserRequest);

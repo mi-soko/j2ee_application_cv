@@ -25,4 +25,10 @@ public class UpdateUserRequest extends ModelBase {
     private String levelStudy;
     @NotNull
     private String professionalExperience;
+
+    @NotNull()
+    private String firstName;
+
+    @NotNull()
+    private String lastName;
 }

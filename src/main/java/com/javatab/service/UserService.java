@@ -14,4 +14,6 @@ public interface UserService {
 
     Optional<User> getUserByUsername(String username);
 
+    Optional<User> getUserById(Long id);
+
 }
