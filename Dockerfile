@@ -5,8 +5,13 @@ ENV APP_HOME /app
 ENV APP_VERSION 1.0.0-SNAPSHOT
 ENV APP_NAME j2ee_application_cv
 
+# Installation de Maven
+RUN apk add --no-cache maven
+
 # Création du répertoire de l'application
 RUN mkdir -p ${APP_HOME}/logs ${APP_HOME}/config
+
+
 
 RUN mvn clean package -DskipTests
 
