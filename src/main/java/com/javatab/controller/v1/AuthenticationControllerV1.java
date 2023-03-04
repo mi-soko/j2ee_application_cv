@@ -35,7 +35,7 @@ public class AuthenticationControllerV1 extends BaseController implements IAuthe
   }
 
   public ResponseEntity<User> registerUser(RegistrationRequest registrationRequest) {
-    return new ResponseEntity<User>(this.authenticationService.registerUser(registrationRequest), HttpStatus.CREATED);
+    return new ResponseEntity<>(this.authenticationService.registerUser(registrationRequest), HttpStatus.CREATED);
   }
 
 }

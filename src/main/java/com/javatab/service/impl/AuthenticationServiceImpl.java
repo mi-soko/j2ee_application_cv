@@ -65,9 +65,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(registrationRequest.getPassword());
         User user = this.userRepository.findByEmail(registrationRequest.getEmail());
-        if (user != null){
-            throw new ValidationException("Email existe deja");
-        }
+//        if (user != null){
+//            throw new ValidationException("Email existe deja");
+//        }
         User newUser = User.builder()
                 .username(registrationRequest.getEmail())
                 .password(hashedPassword)
