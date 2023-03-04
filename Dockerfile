@@ -8,6 +8,8 @@ ENV APP_NAME j2ee_application_cv
 # Création du répertoire de l'application
 RUN mkdir -p ${APP_HOME}/logs ${APP_HOME}/config
 
+RUN mvn clean package -DskipTests
+
 # Copie du jar de l'application dans l'image Docker
 COPY target/${APP_NAME}-${APP_VERSION}.jar ${APP_HOME}/${APP_NAME}.jar
 
