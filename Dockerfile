@@ -9,7 +9,7 @@ ENV APP_NAME j2ee_application_cv
 RUN mkdir -p ${APP_HOME}/logs ${APP_HOME}/config
 
 # Copie du jar de l'application dans l'image Docker
-COPY target/${APP_NAME}-${APP_VERSION}.jar ${APP_HOME}/${APP_NAME}.jar || echo "Le fichier ${APP_NAME}-${APP_VERSION}.jar n'a pas été trouvé dans le répertoire target/ ou il a été exclu par .dockerignore"
+COPY target/${APP_NAME}-${APP_VERSION}.jar ${APP_HOME}/${APP_NAME}.jar
 
 # Vérification du contenu du répertoire /app
 RUN ls -al ${APP_HOME}
