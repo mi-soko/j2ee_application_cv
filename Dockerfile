@@ -19,4 +19,6 @@ WORKDIR ${APP_HOME}
 RUN mvn clean package -DskipTests
 
 # Définition du point d'entrée de l'application
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/target/j2ee_application_cv.jar"]
+#ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/target/j2ee_application_cv.jar"]
+
+
