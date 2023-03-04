@@ -1,5 +1,5 @@
 # Définition de l'image de base
-FROM openjdk:8-jdk-alpine
+FROM openjdk:13-jdk-alpine
 
 # Définition des variables d'environnement
 ENV APP_HOME /app
