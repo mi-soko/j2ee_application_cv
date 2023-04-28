@@ -18,15 +18,11 @@ public class OpenApi30Config {
                 final String apiTitle = String.format("%s API", StringUtils.capitalize("Spring boot JWT auth"));
                 return new OpenAPI()
                                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
-                                .components(
-                                                new Components()
-                                                                .addSecuritySchemes(securitySchemeName,
-                                                                                new SecurityScheme()
-                                                                                                .name(securitySchemeName)
-                                                                                                .type(SecurityScheme.Type.APIKEY)
-                                                                                                .in(SecurityScheme.In.HEADER)
-
-                                                                ))
-                                .info(new Info().title(apiTitle).version("V1"));
+                                .components(new Components().addSecuritySchemes(securitySchemeName,
+                                        new SecurityScheme()
+                                                .name(securitySchemeName)
+                                                .type(SecurityScheme.Type.APIKEY)
+                                                .in(SecurityScheme.In.HEADER)
+                                )).info(new Info().title(apiTitle).version("V1"));
         }
 }

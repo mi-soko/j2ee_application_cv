@@ -16,6 +16,7 @@ public class AuthenticationRequest extends ModelBase {
 	private String password;
 	@Email(message = "Email id should be valid")
 	private String email;
+
 	private String device;
 
 }

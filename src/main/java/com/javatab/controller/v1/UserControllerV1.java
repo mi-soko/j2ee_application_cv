@@ -23,7 +23,7 @@ public class UserControllerV1 extends BaseController implements IUserController 
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @RequestMapping(value = "/get_user_by_username/{username}",name = "get_user_by_username")
+    @RequestMapping(value = "/get_user_by_username/{username}",name = "get_user_by_username", method = RequestMethod.GET)
     public ResponseEntity<User> getUserByName(@PathVariable("username") String username) {
         User aUser = userService.getUserByUsername(username).orElseThrow(() -> new NoUserFoundException(username));
         return ResponseEntity.ok(aUser);
@@ -35,10 +35,12 @@ public class UserControllerV1 extends BaseController implements IUserController 
         return ResponseEntity.ok(aUser);
     }
 
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, name = "get_by_user_id")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        System.out.println(id);
         User aUser = userService.getUserById(id).orElseThrow(() -> new NoUserFoundException(id.toString()));
         return ResponseEntity.ok(aUser);
     }
+
+
 }
